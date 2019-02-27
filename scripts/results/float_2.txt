@@ -1,0 +1,11 @@
+Checking the Debian float type
+
+Soft float?
+   By checking dpkg for armel (if > 0): 0
+   By checking if directory exists: No
+
+Hard float?
+   By checking dpkg for armhf (if > 0): 1063
+   By checking if directory exists: Yes
+
+dpkg architecture: armhf
