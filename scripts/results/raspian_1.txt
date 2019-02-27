@@ -1,0 +1,10 @@
+Checking the Raspian version
+
+Debian version: 9.6
+Kernel version: 4.14.79+
+
+Full version info: 
+Linux raspberrypi 4.14.79+ #1159 Sun Nov 4 17:28:08 GMT 2018 armv6l GNU/Linux
+
+Even more version info: 
+Linux version 4.14.79+ (dc4@dc4-XPS13-9333) (gcc version 4.9.3 (crosstool-NG crosstool-ng-1.22.0-88-g8460611)) #1159 Sun Nov 4 17:28:08 GMT 2018

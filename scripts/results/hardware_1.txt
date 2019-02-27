@@ -1,0 +1,26 @@
+Checking the PI harware version
+
+
+CPU info: 
+processor	: 0
+model name	: ARMv6-compatible processor rev 7 (v6l)
+BogoMIPS	: 697.95
+Features	: half thumb fastmult vfp edsp java tls 
+CPU implementer	: 0x41
+CPU architecture: 7
+CPU variant	: 0x0
+CPU part	: 0xb76
+CPU revision	: 7
+
+Hardware	: BCM2835
+Revision	: 0010
+Serial		: 000000002d2617a6
+
+CPU current values: 
+temp=38.5'C
+frequency(45)=700000000
+volt=1.2000V
+
+Memory:               total        used        free      shared  buff/cache   available
+Mem:           433M         67M        184M        3,4M        181M        314M
+Swap:           99M          0B         99M
