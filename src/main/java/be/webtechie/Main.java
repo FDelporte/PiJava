@@ -1,12 +1,17 @@
 package be.webtechie;
 
+import eu.hansolo.tilesfx.Tile;
+import eu.hansolo.tilesfx.TileBuilder;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-public class MainFX extends Application {
+import java.util.Locale;
+
+public class Main extends Application {
 
     // https://openjfx.io/openjfx-docs/#install-javafx
 
@@ -17,17 +22,17 @@ public class MainFX extends Application {
 
         Label l = new Label("Hello, JavaFX " + javafxVersion + ", running on Java " + javaVersion + ".");
 
-        /*Tile clockTile = TileBuilder.create()
-                .skinType(SkinType.CLOCK)
+        Tile clockTile = TileBuilder.create()
+                .skinType(Tile.SkinType.CLOCK)
                 .prefSize(200, 200)
                 .title("Clock Tile")
                 .text("Whatever text")
                 .dateVisible(true)
                 .locale(Locale.US)
                 .running(true)
-                .build();*/
+                .build();
 
-        Scene scene = new Scene(new StackPane(l), 640, 480);
+        Scene scene = new Scene(new StackPane(clockTile), 640, 480);
         stage.setScene(scene);
         stage.show();
     }

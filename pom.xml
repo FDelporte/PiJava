@@ -61,7 +61,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>be.webtechie.MainFX</mainClass>
+                    <mainClass>be.webtechie.Main</mainClass>
                 </configuration>
             </plugin>
         </plugins>
