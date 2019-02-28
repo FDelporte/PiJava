@@ -1,15 +1,10 @@
 package be.webtechie;
 
-import eu.hansolo.tilesfx.Tile;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-
-import java.util.Locale;
-
-import eu.hansolo.tilesfx.Tile.SkinType;
 
 public class MainFX extends Application {
 
@@ -22,7 +17,7 @@ public class MainFX extends Application {
 
         Label l = new Label("Hello, JavaFX " + javafxVersion + ", running on Java " + javaVersion + ".");
 
-        Tile clockTile = TileBuilder.create()
+        /*Tile clockTile = TileBuilder.create()
                 .skinType(SkinType.CLOCK)
                 .prefSize(200, 200)
                 .title("Clock Tile")
@@ -30,9 +25,9 @@ public class MainFX extends Application {
                 .dateVisible(true)
                 .locale(Locale.US)
                 .running(true)
-                .build();
+                .build();*/
 
-        Scene scene = new Scene(new StackPane(clockTile), 640, 480);
+        Scene scene = new Scene(new StackPane(l), 640, 480);
         stage.setScene(scene);
         stage.show();
     }
