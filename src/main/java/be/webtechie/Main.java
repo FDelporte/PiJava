@@ -5,9 +5,11 @@ import eu.hansolo.tilesfx.TileBuilder;
 import eu.hansolo.tilesfx.tools.Location;
 
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
 import java.util.Locale;
@@ -18,18 +20,28 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
-        String javaVersion = System.getProperty("java.version");
-        String javafxVersion = System.getProperty("javafx.version");
+        final String javaVersion = System.getProperty("java.version");
+        final String javaFxVersion = System.getProperty("javafx.version");
 
-        Label l = new Label("Hello, JavaFX " + javafxVersion + ", running on Java " + javaVersion + ".");
+        var locale = new Locale("nl", "be");
+
+        var textTile = TileBuilder.create()
+                .skinType(Tile.SkinType.TEXT)
+                .prefSize(200, 200)
+                .title("Version info")
+                .description("Java: " + javaVersion + "\nJavaFX: " + javaFxVersion)
+                .descriptionAlignment(Pos.TOP_CENTER)
+                .textVisible(true)
+                .build();
 
         var clockTile = TileBuilder.create()
                 .skinType(Tile.SkinType.CLOCK)
                 .prefSize(200, 200)
-                .title("Clock Tile")
-                .text("Whatever text")
+                .title("Klok")
                 .dateVisible(true)
-                .locale(Locale.US)
+                .valueVisible(false)
+                .textVisible(false)
+                .locale(locale)
                 .running(true)
                 .build();
 
@@ -43,7 +55,7 @@ public class Main extends Application {
 
         var mapTile = TileBuilder.create()
                 .skinType(Tile.SkinType.MAP)
-                .prefSize(500, 200)
+                .prefSize(200, 200)
                 .title("Map")
                 .text("Some text")
                 .description("Description")
@@ -53,7 +65,10 @@ public class Main extends Application {
                 .mapProvider(Tile.MapProvider.TOPO)
                 .build();
 
-        Scene scene = new Scene(new HBox(clockTile, worldTile, mapTile), 800, 480);
+        var webView = new WebView();
+        webView.getEngine().load("https://webtechie.be"); // DoorBird HTML widget "http://xxx/bha-api/view.html"
+
+        Scene scene = new Scene(new HBox(new VBox(textTile, clockTile, worldTile, mapTile), webView), 800, 600);
         stage.setScene(scene);
         stage.show();
     }
