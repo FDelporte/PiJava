@@ -1,14 +1,11 @@
 package be.webtechie;
 
-import be.webtechie.gpio.GPIO;
 import eu.hansolo.tilesfx.Tile;
 import eu.hansolo.tilesfx.Tile.SkinType;
 import eu.hansolo.tilesfx.TileBuilder;
 import eu.hansolo.tilesfx.tools.Location;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -72,11 +69,11 @@ public class Main extends Application {
 
         var ledButton = new Button("Toggle LED on GPIO 22");
 
-        ledButton.setOnAction(new EventHandler<ActionEvent>() {
+        /* ledButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
                 GPIO.toggleLed();
             }
-        });
+        }); */
 
         var ledButtonTile = TileBuilder.create()
                 .skinType(SkinType.CUSTOM)
