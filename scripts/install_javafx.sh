@@ -15,7 +15,7 @@ sudo mv armv6hf-sdk-11-ea+25.zip /opt
 cd /opt
 
 # Unzip the downloaded file
-sudo unzip armv6hf-sdk-11-ea+25.zip /opt
+sudo unzip armv6hf-sdk-11-ea+25.zip 
 
 # Remove the downloaded file
 sudo rm armv6hf-sdk-11-ea+25.zip
