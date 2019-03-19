@@ -70,6 +70,13 @@
                 <version>3.1.1</version>
                 <configuration>
                     <outputDirectory>out/</outputDirectory>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
+                            <mainClass>be.webtechie.Main</mainClass>
+                        </manifest>
+                    </archive>
                 </configuration>
             </plugin>
             <plugin>
