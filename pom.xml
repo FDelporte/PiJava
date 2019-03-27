@@ -74,7 +74,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>be.webtechie.Main</mainClass>
+                            <mainClass>be.webtechie.Launcher</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
