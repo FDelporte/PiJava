@@ -1,20 +1,24 @@
 package be.webtechie;
 
+import be.webtechie.gpio.Gpio;
+import eu.hansolo.tilesfx.Tile;
+import eu.hansolo.tilesfx.Tile.SkinType;
+import eu.hansolo.tilesfx.TileBuilder;
+import eu.hansolo.tilesfx.tools.Location;
+import java.util.Locale;
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
 public class Main extends Application {
 
-    // https://openjfx.io/openjfx-docs/#install-javafx
-
     @Override
     public void start(Stage stage) {
-        final String javaVersion = System.getProperty("java.version");
-        final String javaFxVersion = System.getProperty("javafx.version");
-
-        Scene scene = new Scene(new Label("Java: " + javaVersion + ", JavaFX: " + javaFxVersion), 800, 600);
+        Scene scene = new Scene(FxScreen.getScreen(), 800, 600);
         stage.setScene(scene);
         stage.show();
     }

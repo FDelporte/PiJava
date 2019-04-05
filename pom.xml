@@ -32,17 +32,6 @@
         </dependency>
 
         <!--
-        Pi4J - https://www.pi4j.com/1.2/index.html
-        A friendly object-oriented I/O API and implementation libraries for Java Programmers to access the full I/O capabilities of the Raspberry Pi platform.
-        https://mvnrepository.com/artifact/com.pi4j/pi4j-core
-        -->
-        <dependency>
-            <groupId>com.pi4j</groupId>
-            <artifactId>pi4j-core</artifactId>
-            <version>1.2</version>
-        </dependency>
-
-        <!--
         TilesFX - https://github.com/HanSolo/tilesfx
         A JavaFX library containing tiles for Dashboards.
         https://mvnrepository.com/artifact/eu.hansolo/tilesfx

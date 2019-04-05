@@ -1,30 +1,45 @@
 package be.webtechie;
 
+import be.webtechie.gpio.Gpio;
 import eu.hansolo.tilesfx.Tile;
 import eu.hansolo.tilesfx.Tile.SkinType;
 import eu.hansolo.tilesfx.TileBuilder;
 import eu.hansolo.tilesfx.tools.Location;
 import java.util.Locale;
-import javafx.application.Application;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
-public class MainWithTilesFX extends Application {
+/**
+ * Helper function to create our GUI.
+ */
+public class FxScreen {
 
-    // https://openjfx.io/openjfx-docs/#install-javafx
+    /**
+     * The pin we are using in our example.
+     */
+    private static final int LED_PIN = 17;
 
-    @Override
-    public void start(Stage stage) {
+    /**
+     * Builds the GUI for our FX application.
+     *
+     * @return The GUI as a HBox.
+     */
+    public static HBox getScreen() {
+        // Initialize the led pin
+        Gpio.initiatePin(LED_PIN);
+
+        // Get the Java version info
         final String javaVersion = System.getProperty("java.version");
         final String javaFxVersion = System.getProperty("javafx.version");
 
+        // Define our local setting (used by the clock)
         var locale = new Locale("nl", "be");
 
+        // Tile with the Java info
         var textTile = TileBuilder.create()
                 .skinType(SkinType.TEXT)
                 .prefSize(200, 200)
@@ -34,6 +49,7 @@ public class MainWithTilesFX extends Application {
                 .textVisible(true)
                 .build();
 
+        // Tile with a clock
         var clockTile = TileBuilder.create()
                 .skinType(SkinType.CLOCK)
                 .prefSize(200, 200)
@@ -45,14 +61,7 @@ public class MainWithTilesFX extends Application {
                 .running(true)
                 .build();
 
-        var worldTile = TileBuilder.create()
-                .prefSize(200, 200)
-                .skinType(SkinType.WORLDMAP)
-                .title("WorldMap Tile")
-                .text("Whatever text")
-                .textVisible(false)
-                .build();
-
+        // Tile with a map
         var mapTile = TileBuilder.create()
                 .skinType(SkinType.MAP)
                 .prefSize(200, 200)
@@ -65,32 +74,36 @@ public class MainWithTilesFX extends Application {
                 .mapProvider(Tile.MapProvider.TOPO)
                 .build();
 
-        var ledButton = new Button("Toggle LED on GPIO 22");
-
-        /* ledButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-                GPIO.toggleLed();
-            }
-        }); */
-
-        var ledButtonTile = TileBuilder.create()
-                .skinType(SkinType.CUSTOM)
+        // Tile with a switch button to turn our LED on or off
+        var ledSwitchTile = TileBuilder.create()
+                .skinType(SkinType.SWITCH)
                 .prefSize(200, 200)
-                .title("GPIO")
-                .text("Trigger LED toggling on the board")
-                .graphic(ledButton)
+                .title("Gpio " + LED_PIN)
                 .roundedCorners(false)
                 .build();
 
+        ledSwitchTile.setOnSwitchPressed(e ->  Gpio.setPinState(LED_PIN, true));
+        ledSwitchTile.setOnSwitchReleased(e -> Gpio.setPinState(LED_PIN, false));
+
+        // Tile with an exit button to end the application
+        var exitButton = new Button("Exit");
+        exitButton.setOnAction(e -> ((Stage) exitButton.getScene().getWindow()).close());
+
+        var exitTile = TileBuilder.create()
+                .skinType(SkinType.CUSTOM)
+                .prefSize(200, 200)
+                .title("Quit the application")
+                .graphic(exitButton)
+                .roundedCorners(false)
+                .build();
+
+        // Webview
         var webView = new WebView();
         webView.getEngine().load("https://webtechie.be"); // DoorBird HTML widget "http://xxx/bha-api/view.html"
 
-        Scene scene = new Scene(new HBox(new VBox(textTile, clockTile, worldTile, mapTile, ledButtonTile), webView), 800, 600);
-        stage.setScene(scene);
-        stage.show();
-    }
+        var tiles = new VBox(textTile, clockTile, mapTile, ledSwitchTile, exitTile);
+        tiles.setMinWidth(200);
 
-    public static void main(String[] args) {
-        launch();
+        return new HBox(tiles, webView);
     }
 }
