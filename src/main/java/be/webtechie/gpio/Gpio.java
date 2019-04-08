@@ -20,7 +20,9 @@ public class Gpio {
     public static void initiatePin(final int pin) {
         final List<String> cmd = new ArrayList<>();
         cmd.add("gpio");
-        cmd.add("mode " + pin + " out");
+        cmd.add("mode");
+        cmd.add(String.valueOf(pin));
+        cmd.add("out");
 
         execute(cmd);
     }
@@ -34,7 +36,9 @@ public class Gpio {
     public static void setPinState(final int pin, final boolean on) {
         final List<String> cmd = new ArrayList<>();
         cmd.add("gpio");
-        cmd.add("write " + pin + (on ? " 1" : " 0"));
+        cmd.add("write");
+        cmd.add(String.valueOf(pin));
+        cmd.add(on ? " 1" : " 0");
 
         execute(cmd);
     }
