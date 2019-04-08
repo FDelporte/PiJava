@@ -1,10 +1,10 @@
 package be.webtechie;
 
 import be.webtechie.gpio.Gpio;
-import eu.hansolo.tilesfx.Tile;
+// import eu.hansolo.tilesfx.Tile;
 import eu.hansolo.tilesfx.Tile.SkinType;
 import eu.hansolo.tilesfx.TileBuilder;
-import eu.hansolo.tilesfx.tools.Location;
+// import eu.hansolo.tilesfx.tools.Location;
 import java.util.Locale;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -62,7 +62,7 @@ public class FxScreen {
                 .build();
 
         // Tile with a map
-        var mapTile = TileBuilder.create()
+        /* var mapTile = TileBuilder.create()
                 .skinType(SkinType.MAP)
                 .prefSize(200, 200)
                 .title("Map")
@@ -72,7 +72,7 @@ public class FxScreen {
                 .pointsOfInterest(new Location(50.901098, 3.019505, "School", Tile.TileColor.RED.color),
                         new Location(50.900131, 3.021212, "Shop", Tile.TileColor.BLUE.color))
                 .mapProvider(Tile.MapProvider.TOPO)
-                .build();
+                .build(); */
 
         // Tile with a switch button to turn our LED on or off
         var ledSwitchTile = TileBuilder.create()
@@ -101,7 +101,7 @@ public class FxScreen {
         // var webView = new WebView();
         // webView.getEngine().load("https://webtechie.be"); // DoorBird HTML widget "http://xxx/bha-api/view.html"
 
-        var tiles = new VBox(textTile, clockTile, mapTile, ledSwitchTile, exitTile);
+        var tiles = new VBox(textTile, clockTile, ledSwitchTile, exitTile); // mapTile
         tiles.setMinWidth(200);
 
         return new HBox(tiles); // webView
