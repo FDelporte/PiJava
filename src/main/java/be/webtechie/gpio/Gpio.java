@@ -41,6 +41,8 @@ public class Gpio {
         cmd.add(String.valueOf(pin));
         cmd.add(on ? " 1" : " 0"); */
 
+        System.out.println("Setting pin to " + on);
+
         execute("gpio write " + pin + (on ? " 1" : " 0"));
     }
 
@@ -58,6 +60,8 @@ public class Gpio {
             for (int i = 0; i < error.available(); i++) {
                 System.out.println("" + error.read());
             }
+
+            System.out.println(cmd);
 
             p.destroy();
         } catch (IOException e) {
