@@ -15,12 +15,12 @@ public class Gpio {
     /**
      * Initialize the pin so it can be toggled.
      *
-     * @param pin The pin number according to the BCM_GPIO pin numbering scheme = the number of the pin in the plug
+     * @param pin The pin number according to the WiringPi numbering scheme
      */
     public static void initiatePin(final int pin) {
         final List<String> cmd = new ArrayList<>();
         cmd.add("gpio");
-        cmd.add("-g mode " + pin + " out");
+        cmd.add("mode " + pin + " out");
 
         execute(cmd);
     }
@@ -28,13 +28,13 @@ public class Gpio {
     /**
      * Set the state of the pin high or low.
      *
-     * @param pin The pin number according to the BCM_GPIO pin numbering scheme = the number of the pin in the plug
+     * @param pin The pin number according to the WiringPi numbering scheme
      * @param on True or False
      */
     public static void setPinState(final int pin, final boolean on) {
         final List<String> cmd = new ArrayList<>();
         cmd.add("gpio");
-        cmd.add("-g write " + pin + (on ? " 1" : " 0"));
+        cmd.add("write " + pin + (on ? " 1" : " 0"));
 
         execute(cmd);
     }

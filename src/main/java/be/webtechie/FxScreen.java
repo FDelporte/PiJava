@@ -10,7 +10,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.web.WebView;
+// import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
 /**
@@ -21,7 +21,7 @@ public class FxScreen {
     /**
      * The pin we are using in our example.
      */
-    private static final int LED_PIN = 17;
+    private static final int LED_PIN = 3;
 
     /**
      * Builds the GUI for our FX application.
@@ -98,12 +98,13 @@ public class FxScreen {
                 .build();
 
         // Webview
-        var webView = new WebView();
-        webView.getEngine().load("https://webtechie.be"); // DoorBird HTML widget "http://xxx/bha-api/view.html"
+        // var webView = new WebView();
+        // webView.getEngine().load("https://webtechie.be"); // DoorBird HTML widget "http://xxx/bha-api/view.html"
 
         var tiles = new VBox(textTile, clockTile, mapTile, ledSwitchTile, exitTile);
         tiles.setMinWidth(200);
 
-        return new HBox(tiles, webView);
+        return new HBox(tiles); // webView
+
     }
 }
