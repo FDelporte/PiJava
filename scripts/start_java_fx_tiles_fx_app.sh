@@ -5,6 +5,3 @@ sudo /opt/jdk-11.0.2/bin/java \
 	-Dprism.verbose=true \
 	-Dembedded=monocle \
 	-Dglass.platform=Monocle
-
-#	--module-path=/opt/tilesfx11 \
-#	--add-modules=eu.hansolo \
