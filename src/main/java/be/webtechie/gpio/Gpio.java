@@ -2,6 +2,7 @@ package be.webtechie.gpio;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +69,12 @@ public class Gpio {
             int exitCode = process.waitFor();
 
             System.out.println("Command exited with error code : " + exitCode);
+
+            // get the error stream of the process and print it
+            InputStream error = process.getErrorStream();
+            for (int i = 0; i < error.available(); i++) {
+                System.out.println("" + error.read());
+            }
         } catch (IOException e) {
             System.err.println(e.getMessage());
         } catch (InterruptedException e) {
