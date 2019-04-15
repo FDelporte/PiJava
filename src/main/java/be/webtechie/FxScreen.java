@@ -194,13 +194,13 @@ public class FxScreen {
     private void startButtonRead() {
         Thread t = new Thread(() -> {
             while (running) {
-                var buttonState = Gpio.getPinState(PIN_BUTTON);
+                var buttonPressed = Gpio.getPinState(PIN_BUTTON);
 
-                if (buttonIsPressed != buttonState) {
-                    buttonIsPressed = buttonState;
+                if (buttonIsPressed != buttonPressed) {
+                    buttonIsPressed = buttonPressed;
 
                     var timeStamp = new SimpleDateFormat("HH.mm.ss").format(new Date());
-                    this.seriesButton.getData().add(new XYChart.Data(timeStamp, buttonState));
+                    this.seriesButton.getData().add(new XYChart.Data(timeStamp, buttonPressed ? 1 : 0));
                 }
 
                 try {
