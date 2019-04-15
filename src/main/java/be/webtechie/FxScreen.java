@@ -200,7 +200,7 @@ public class FxScreen {
                     buttonIsPressed = buttonPressed;
 
                     var timeStamp = new SimpleDateFormat("HH.mm.ss").format(new Date());
-                    this.seriesButton.getData().add(new XYChart.Data(timeStamp, buttonPressed ? 1 : 0));
+                    this.seriesButton.getData().add(new XYChart.Data(timeStamp, buttonPressed ? 100 : 0));
                 }
 
                 try {
