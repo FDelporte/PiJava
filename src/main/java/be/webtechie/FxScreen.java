@@ -1,16 +1,17 @@
 package be.webtechie;
 
 import be.webtechie.gpio.Gpio;
-// import eu.hansolo.tilesfx.Tile;
 import eu.hansolo.tilesfx.Tile.SkinType;
 import eu.hansolo.tilesfx.TileBuilder;
-// import eu.hansolo.tilesfx.tools.Location;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
+import java.util.Random;
 import javafx.geometry.Pos;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-// import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
 /**
@@ -19,19 +20,76 @@ import javafx.stage.Stage;
 public class FxScreen {
 
     /**
-     * The pin we are using in our example.
+     * The pins we are using in our example.
      */
-    private static final int LED_PIN = 3;
+    private static final int PIN_LED = 3;
+    private static final int PIN_BUTTON = 5;
+
+    /**
+     * Data series used on the charts.
+     */
+    private final XYChart.Series<String, Number> seriesTemperatureInside;
+    private final XYChart.Series<String, Number> seriesTemperatureOutside;
+    private final XYChart.Series<String, Number> seriesButton;
+
+    /**
+     * Previous state of the button so we can update the chart when it changes.
+     */
+    private boolean buttonIsPressed = false;
+
+    /**
+     * Flag to keep the threads running or stop then when the close button is clicked.
+     */
+    private static boolean running = true;
+
+    /**
+     * The screen.
+     */
+    private final HBox screen;
+
+    /**
+     * Constructor.
+     */
+    public FxScreen() {
+        // Initialize the pins
+        Gpio.initiatePin(PIN_LED, "out");
+        Gpio.initiatePin(PIN_BUTTON, "in");
+
+        // Setup the line chart data series
+        this.seriesTemperatureInside = new XYChart.Series();
+        this.seriesTemperatureInside.setName("Inside temperature");
+
+        this.seriesTemperatureOutside = new XYChart.Series();
+        this.seriesTemperatureOutside.setName("Outside temperature");
+
+        this.seriesButton = new XYChart.Series();
+        this.seriesButton.setName("Button pressed");
+
+        // Start thread which will generated dummy data
+        this.startDemoData();
+
+        // Start thread which read the button state
+        this.startButtonRead();
+
+        // Build the screen
+        this.screen = buildScreen();
+    }
 
     /**
      * Builds the GUI for our FX application.
      *
      * @return The GUI as a HBox.
      */
-    public static HBox getScreen() {
-        // Initialize the led pin
-        Gpio.initiatePin(LED_PIN);
+    public HBox getScreen() {
+        return this.screen;
+    }
 
+    /**
+     * Build the screen.
+     *
+     * @return
+     */
+    private HBox buildScreen() {
         // Get the Java version info
         final String javaVersion = System.getProperty("java.version");
         final String javaFxVersion = System.getProperty("javafx.version");
@@ -42,7 +100,7 @@ public class FxScreen {
         // Tile with the Java info
         var textTile = TileBuilder.create()
                 .skinType(SkinType.TEXT)
-                .prefSize(200, 200)
+                .prefSize(250, 200)
                 .title("Version info")
                 .description("Java: " + javaVersion + "\nJavaFX: " + javaFxVersion)
                 .descriptionAlignment(Pos.TOP_CENTER)
@@ -52,8 +110,8 @@ public class FxScreen {
         // Tile with a clock
         var clockTile = TileBuilder.create()
                 .skinType(SkinType.CLOCK)
-                .prefSize(200, 200)
-                .title("Klok")
+                .prefSize(250, 200)
+                .title("Clock")
                 .dateVisible(true)
                 .valueVisible(false)
                 .textVisible(false)
@@ -61,50 +119,119 @@ public class FxScreen {
                 .running(true)
                 .build();
 
-        // Tile with a map
-        /* var mapTile = TileBuilder.create()
-                .skinType(SkinType.MAP)
-                .prefSize(200, 200)
-                .title("Map")
-                .text("Some text")
-                .description("Description")
-                .currentLocation(new Location(50.900028, 3.017390, "Home", Tile.TileColor.MAGENTA.color))
-                .pointsOfInterest(new Location(50.901098, 3.019505, "School", Tile.TileColor.RED.color),
-                        new Location(50.900131, 3.021212, "Shop", Tile.TileColor.BLUE.color))
-                .mapProvider(Tile.MapProvider.TOPO)
-                .build(); */
-
         // Tile with a switch button to turn our LED on or off
         var ledSwitchTile = TileBuilder.create()
                 .skinType(SkinType.SWITCH)
-                .prefSize(200, 200)
-                .title("Gpio " + LED_PIN)
+                .prefSize(250, 200)
+                .title("Gpio " + PIN_LED)
                 .roundedCorners(false)
                 .build();
 
-        ledSwitchTile.setOnSwitchPressed(e ->  Gpio.setPinState(LED_PIN, true));
-        ledSwitchTile.setOnSwitchReleased(e -> Gpio.setPinState(LED_PIN, false));
+        ledSwitchTile.setOnSwitchReleased(e -> Gpio.setPinState(PIN_LED, ledSwitchTile.isActive()));
 
         // Tile with an exit button to end the application
         var exitButton = new Button("Exit");
-        exitButton.setOnAction(e -> ((Stage) exitButton.getScene().getWindow()).close());
+        exitButton.setOnAction(e -> endApplication());
 
         var exitTile = TileBuilder.create()
                 .skinType(SkinType.CUSTOM)
-                .prefSize(200, 200)
+                .prefSize(250, 200)
                 .title("Quit the application")
                 .graphic(exitButton)
                 .roundedCorners(false)
                 .build();
 
-        // Webview
-        // var webView = new WebView();
-        // webView.getEngine().load("https://webtechie.be"); // DoorBird HTML widget "http://xxx/bha-api/view.html"
+        // Line chart example which will get random data from a thread
+        var tempartureLineChartTile = TileBuilder.create()
+                .skinType(SkinType.SMOOTHED_CHART)
+                .prefSize(Double.MAX_VALUE, 400)
+                .title("Random temperature chart")
+                //.animated(true)
+                .smoothing(false)
+                .series(this.seriesTemperatureInside, this.seriesTemperatureOutside)
+                .build();
+
+        // Line chart example which will get the button state from a thread
+        var buttonLineChartTile = TileBuilder.create()
+                .skinType(SkinType.SMOOTHED_CHART)
+                .prefSize(Double.MAX_VALUE, 400)
+                .title("Button GPIO state")
+                //.animated(true)
+                .smoothing(false)
+                .series(this.seriesButton)
+                .build();
 
         var tiles = new VBox(textTile, clockTile, ledSwitchTile, exitTile); // mapTile
-        tiles.setMinWidth(200);
+        tiles.setMinWidth(250);
 
-        return new HBox(tiles); // webView
+        return new HBox(tiles, new VBox(tempartureLineChartTile, buttonLineChartTile)); // webView
+    }
 
+    /**
+     * Thread to generate random test temperatures.
+     */
+    private void startDemoData() {
+        Thread t = new Thread(() -> {
+            while (running) {
+                var timeStamp = new SimpleDateFormat("HH.mm.ss").format(new Date());
+                this.seriesTemperatureInside.getData().add(new XYChart.Data(timeStamp, this.randomNumber(17,25)));
+                this.seriesTemperatureOutside.getData().add(new XYChart.Data(timeStamp, this.randomNumber(-10,30)));
+
+                try {
+                    Thread.sleep(2500);
+                } catch (InterruptedException ex) {
+                    System.err.println("Data thread got interrupted");
+                }
+            }
+        });
+
+        t.start();
+    }
+
+    /**
+     * Thread to read the button state.
+     */
+    private void startButtonRead() {
+        Thread t = new Thread(() -> {
+            while (running) {
+                var buttonState = Gpio.getPinState(PIN_BUTTON);
+
+                if (buttonIsPressed != buttonState) {
+                    buttonIsPressed = buttonState;
+
+                    var timeStamp = new SimpleDateFormat("HH.mm.ss").format(new Date());
+                    this.seriesButton.getData().add(new XYChart.Data(timeStamp, buttonState));
+                }
+
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException ex) {
+                    System.err.println("Data thread got interrupted");
+                }
+            }
+        });
+
+        t.start();
+    }
+
+    /**
+     * Generate random number between the given limits.
+     *
+     * @param min
+     * @param max
+     * @return
+     */
+    private int randomNumber(int min, int max) {
+        Random rand = new Random();
+        return rand.nextInt((max - min) + 1) + min;
+    }
+
+    /**
+     * Stop the threads and close the application.
+     */
+    private void endApplication() {
+        this.running = false;
+
+        ((Stage) this.screen.getScene().getWindow()).close();
     }
 }
