@@ -45,9 +45,11 @@ public class Gpio {
      * @param pin The pin number according to the WiringPi numbering scheme
      */
     public static boolean getPinState(final int pin) {
-        System.out.println("Getting pin state of " + pin);
+        final String result = execute("gpio read " + pin);
 
-        return execute("gpio digitalRead " + pin).equals("1");
+        System.out.println("Getting pin state of " + pin + ", result: " + result);
+
+        return result.equals("1");
     }
 
     /**

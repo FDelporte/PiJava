@@ -10,7 +10,7 @@ public class Main extends Application {
     public void start(Stage stage) {
         FxScreen demoScreen = new FxScreen();
 
-        Scene scene = new Scene(demoScreen.getScreen(), Double.MAX_VALUE, Double.MAX_VALUE);
+        Scene scene = new Scene(demoScreen.getScreen(), 800, 600);
         stage.setScene(scene);
         stage.show();
     }

@@ -144,7 +144,7 @@ public class FxScreen {
         // Line chart example which will get random data from a thread
         var tempartureLineChartTile = TileBuilder.create()
                 .skinType(SkinType.SMOOTHED_CHART)
-                .prefSize(Double.MAX_VALUE, 400)
+                .prefSize(550, 400)
                 .title("Random temperature chart")
                 //.animated(true)
                 .smoothing(false)
@@ -154,7 +154,7 @@ public class FxScreen {
         // Line chart example which will get the button state from a thread
         var buttonLineChartTile = TileBuilder.create()
                 .skinType(SkinType.SMOOTHED_CHART)
-                .prefSize(Double.MAX_VALUE, 400)
+                .prefSize(550, 400)
                 .title("Button GPIO state")
                 //.animated(true)
                 .smoothing(false)
