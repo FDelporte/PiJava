@@ -1,23 +1,15 @@
 #!/usr/bin/env bash
 
-# Script from http://docs.gluonhq.com/embedded/
-
 # Make sure we are in the home directory
 cd /home/pi
 
-# Download the JavaFX 11 build from GluonHQ
-wget -O armv6hf-sdk-11-ea+25.zip http://gluonhq.com/download/javafx-11-ea-sdk-armv6hf
+# Download the TilesFX module from Maven
+wget -O tilesfx-11.1.jar http://central.maven.org/maven2/eu/hansolo/tilesfx/11.1/tilesfx-11.1.jar
 
-# Move the downloaded file to /opt
-sudo mv armv6hf-sdk-11-ea+25.zip /opt
+# Make a directory in opt
+sudo mkdir /opt/tilesfx11
 
-# Use the /opt directory
-cd /opt
+# Move the downloaded file to opt
+sudo mv tilesfx-11.1.jar /opt/tilesfx11
 
-# Unzip the downloaded file
-sudo unzip armv6hf-sdk-11-ea+25.zip 
-
-# Remove the downloaded file
-sudo rm armv6hf-sdk-11-ea+25.zip
-
-echo "JavaFX 11 was downloaded and installed"
+echo "TilesFX 11 was downloaded and installed"
