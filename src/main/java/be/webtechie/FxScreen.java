@@ -161,10 +161,17 @@ public class FxScreen {
                 .series(this.seriesButton)
                 .build();
 
-        var tiles = new VBox(textTile, clockTile, ledSwitchTile, exitTile); // mapTile
-        tiles.setMinWidth(250);
+        var tilesColumn1 = new VBox(textTile, clockTile, ledSwitchTile, exitTile);
+        tilesColumn1.setMinWidth(250);
+        tilesColumn1.setSpacing(5);
 
-        return new HBox(tiles, new VBox(tempartureLineChartTile, buttonLineChartTile)); // webView
+        var tilesColumn2 = new VBox(tempartureLineChartTile, buttonLineChartTile);
+        tilesColumn2.setSpacing(5);
+
+        var tilesAll = new HBox(tilesColumn1, tilesColumn2);
+        tilesAll.setSpacing(5);
+
+        return tilesAll;
     }
 
     /**
