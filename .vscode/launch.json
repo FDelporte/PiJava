@@ -1,0 +1,32 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - HelloGpio",
+            "request": "launch",
+            "mainClass": "be.webtechie.HelloGpio",
+            "projectName": "pijava"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Launcher",
+            "request": "launch",
+            "mainClass": "be.webtechie.Launcher",
+            "projectName": "pijava"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - HelloWorld",
+            "request": "launch",
+            "mainClass": "be.webtechie.HelloWorld",
+            "projectName": "pijava"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Main",
+            "request": "launch",
+            "mainClass": "be.webtechie.Main",
+            "projectName": "pijava"
+        }
+    ]
+}
