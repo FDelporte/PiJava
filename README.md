@@ -6,10 +6,10 @@ Experiments with the latest Java and JavaFx on Raspberry PI.
     * "HelloWorld.java" --> application which can be started with Java 11 without compiling.
     * "HelloGpio.java" --> Java application interacting with the GPIO.
     * "Main.java" + "Launcher.java" --> JavaFX application using TilesFX.
-* Scripts 
-    * To setup Java and JavaFX on a new Raspian OS.
-    * To define the PI type and related info.
-    * To running the Java and JavaFX applications.
+* Scripts for
+    * Setting up Java and JavaFX on a new Raspian OS.
+    * Defining the PI type and related info.
+    * Running the Java and JavaFX applications.
 
 ![Screenshot of the running JavaFX application](screenshots/pijava_running.png)
 
