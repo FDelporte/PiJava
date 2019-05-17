@@ -1,4 +1,4 @@
-package be.webtechie;
+package be.webtechie.ui;
 
 import be.webtechie.gpio.Gpio;
 import eu.hansolo.tilesfx.Tile.SkinType;

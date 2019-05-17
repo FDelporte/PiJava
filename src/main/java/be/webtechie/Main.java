@@ -1,5 +1,6 @@
 package be.webtechie;
 
+import be.webtechie.ui.FxScreen;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
