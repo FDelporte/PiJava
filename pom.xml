@@ -11,7 +11,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <mainClass>be.webtechie.Main</mainClass>
+        <mainClass>be.webtechie.Launcher</mainClass>
     </properties>
 
     <organization>
