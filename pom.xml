@@ -77,7 +77,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>be.webtechie.Main</mainClass>
+                    <mainClass>be.webtechie.Launcher</mainClass>
                 </configuration>
             </plugin>
         </plugins>
